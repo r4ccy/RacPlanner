@@ -1,9 +1,15 @@
 package com.raccy.racplanner.screens
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun DetalleCarrera() {
-    Text("Detalles de la carrera seleccionada")
+fun DetalleCarrera(
+    cambiarPantalla: (String) -> Unit
+) {
+    Column {
+        Text("Pantalla Detalle")
+    }
 }
