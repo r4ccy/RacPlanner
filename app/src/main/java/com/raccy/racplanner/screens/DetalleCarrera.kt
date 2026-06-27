@@ -10,7 +10,8 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun DetalleCarrera(
-    cambiarPantalla: (String) -> Unit
+    cambiarPantalla: (String) -> Unit,
+    codigo: String
 ) {
     Column( modifier = Modifier.padding(20.dp)) {
         Text("RacPlanner")

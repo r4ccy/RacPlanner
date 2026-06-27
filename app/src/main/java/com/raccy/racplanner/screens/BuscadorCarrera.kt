@@ -10,29 +10,54 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BuscadorCarrera(
-    cambiarPantalla: (String) -> Unit
+    cambiarPantalla: (String) -> Unit,
+    seleccionarCarrera: (String) -> Unit
 ) {
 
     Column( modifier = Modifier.padding(20.dp)) {
         Text("RacPlanner")
         Text("Buscador de carreras")
 
-        Text("123-1")
         Text("Ing. Informatica")
+        Button(
+            onClick = {
+                seleccionarCarrera("123-1")
+                cambiarPantalla("detalle") }
+        ) { Text("Ver detalles")}
 
-        Text("123-2")
         Text("Ing. Electronica")
+        Button(
+            onClick = {
+                seleccionarCarrera("123-2")
+                cambiarPantalla("detalle") }
+        ) { Text("Ver detalles")}
 
-        Text("123-3")
         Text("Ing. Mecatronica")
+        Button(
+            onClick = {
+                seleccionarCarrera("123-3")
+                cambiarPantalla("detalle") }
+        ) { Text("Ver detalles")}
 
-        Text("123-4")
         Text("Ing. Industrial")
+        Button(
+            onClick = {
+                seleccionarCarrera("123-4")
+                cambiarPantalla("detalle") }
+        ) { Text("Ver detalles")}
 
-        Text("123-5")
         Text("Ing. Civil")
+        Button(
+            onClick = {
+                seleccionarCarrera("123-5")
+                cambiarPantalla("detalle") }
+        ) { Text("Ver detalles")}
 
-        Text("123-6")
         Text("Ing. Sistemas")
+        Button(
+            onClick = {
+                seleccionarCarrera("123-6")
+                cambiarPantalla("detalle") }
+        ) { Text("Ver detalles")}
     }
 }
