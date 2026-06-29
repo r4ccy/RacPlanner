@@ -33,7 +33,7 @@ fun BuscadorCarrera(
                 Text(carrera.nombre)
                 Button(
                     onClick = {
-                        seleccionarCarrera(carrera.codigo)
+                        seleccionarCarrera(carrera.codigo.toString())
                         cambiarPantalla("detalle")
                     }
                 ) { Text("Ver detalles") }
