@@ -13,6 +13,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import com.raccy.racplanner.viewmodel.DetalleCarreraVM
 
+private fun formatearHora(hora: String): String {
+    return hora.padStart(4, '0').let {
+        "${it.substring(0, 2)}:${it.substring(2)}"
+    }
+}
 @Composable
 fun DetalleCarrera(
     cambiarPantalla: (String) -> Unit,
@@ -55,7 +60,7 @@ fun DetalleCarrera(
                         )
                         grupo.schedule.forEach { horario ->
                             Text(
-                                text = "${horario.day} ${horario.start} - ${horario.end}",
+                                text = "${horario.day} ${formatearHora(horario.start)} - ${formatearHora(horario.end)}",
                                 modifier = Modifier.padding(start = 48.dp)
                             )
                         }
