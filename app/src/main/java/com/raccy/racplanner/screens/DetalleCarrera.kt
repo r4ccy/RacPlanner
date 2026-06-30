@@ -1,8 +1,8 @@
 package com.raccy.racplanner.screens
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,17 +24,32 @@ fun DetalleCarrera(
     LaunchedEffect(codigo) {
         viewModel.cargarCarrera(codigo)
     }
-    Column( modifier = Modifier.padding(20.dp)) {
-        Text("RacPlanner")
-        Text("Detalle de la carrera")
-
+    LazyColumn(modifier = Modifier.padding(20.dp)) {
+        item {
+            Text("RacPlanner")
+            Text("Detalle de la carrera")
+        }
         if (state == null) {
-            Text("Cargando...")
+            item {
+                Text("Cargando...")
+            }
         } else {
-            Text("Codigo: ${state?.code ?: ""}")
-            Text("Nombre: ${state?.name ?: ""}")
-            Text("Semestre: ${state?.semester ?: ""}")
-            state?.levels?.forEach { nivel -> Text("Nivel ${nivel.code}") }
+            item {
+                Text("Codigo: ${state?.code ?: ""}")
+                Text("Nombre: ${state?.name ?: ""}")
+                Text("Semestre: ${state?.semester ?: ""}")
+            }
+            state?.levels?.forEach { nivel ->
+                item {
+                    Text("Nivel ${nivel.code}")
+                }
+                items(nivel.subjects) { materia ->
+                    Text(
+                        text = "Materia: ${materia.name}",
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+            }
         }
     }
 }
