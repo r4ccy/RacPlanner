@@ -34,7 +34,7 @@ fun DetalleCarrera(
             Text("Codigo: ${state?.code ?: ""}")
             Text("Nombre: ${state?.name ?: ""}")
             Text("Semestre: ${state?.semester ?: ""}")
-
+            state?.levels?.forEach { nivel -> Text("Nivel ${nivel.code}") }
         }
     }
 }
