@@ -53,6 +53,12 @@ fun DetalleCarrera(
                             text = "Grupo: ${grupo.code} - ${grupo.teacher}",
                             modifier = Modifier.padding(start = 32.dp)
                         )
+                        grupo.schedule.forEach { horario ->
+                            Text(
+                                text = "${horario.day} ${horario.start} - ${horario.end}",
+                                modifier = Modifier.padding(start = 48.dp)
+                            )
+                        }
                     }
                 }
             }
