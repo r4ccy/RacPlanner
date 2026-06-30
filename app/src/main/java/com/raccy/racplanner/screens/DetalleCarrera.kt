@@ -48,6 +48,12 @@ fun DetalleCarrera(
                         text = "Materia: ${materia.name}",
                         modifier = Modifier.padding(start = 16.dp)
                     )
+                    materia.groups.forEach { grupo ->
+                        Text(
+                            text = "Grupo: ${grupo.code} - ${grupo.teacher}",
+                            modifier = Modifier.padding(start = 32.dp)
+                        )
+                    }
                 }
             }
         }
