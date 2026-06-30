@@ -18,6 +18,17 @@ private fun formatearHora(hora: String): String {
         "${it.substring(0, 2)}:${it.substring(2)}"
     }
 }
+
+private fun formatearDia(dia: String): String {
+    return when (dia) {
+        "LU" -> "Lunes"
+        "MA" -> "Martes"
+        "MI" -> "Miercoles"
+        "JU" -> "Jueves"
+        "VI" -> "Viernes"
+        else -> dia
+    }
+}
 @Composable
 fun DetalleCarrera(
     cambiarPantalla: (String) -> Unit,
@@ -60,7 +71,7 @@ fun DetalleCarrera(
                         )
                         grupo.schedule.forEach { horario ->
                             Text(
-                                text = "${horario.day} ${formatearHora(horario.start)} - ${formatearHora(horario.end)}",
+                                text = "${formatearDia(horario.day)} ${formatearHora(horario.start)} - ${formatearHora(horario.end)}",
                                 modifier = Modifier.padding(start = 48.dp)
                             )
                         }
