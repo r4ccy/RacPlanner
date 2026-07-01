@@ -36,6 +36,12 @@ fun OrganizadorHor(
                         Text("${formatearHora(evento.inicio)} - ${formatearHora(evento.fin)}")
                         Text(evento.materia)
                         Text(evento.docente)
+                        Text(
+                            text = if (evento.esTeoria)
+                            "Teórica"
+                            else
+                            "Auxiliatura"
+                        )
                     }
                 }
             }
