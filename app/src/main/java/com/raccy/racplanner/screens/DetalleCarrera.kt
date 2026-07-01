@@ -16,28 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import com.raccy.racplanner.state.HorarioState
 import com.raccy.racplanner.viewmodel.DetalleCarreraVM
+import com.raccy.racplanner.utils.formatearDia
+import com.raccy.racplanner.utils.formatearHora
 
-private fun formatearHora(hora: String): String {
-    return hora.padStart(4, '0').let {
-        "${it.substring(0, 2)}:${it.substring(2)}"
-    }
-}
-
-private fun formatearDia(dia: String): String {
-    return when (dia) {
-        "LU" -> "Lunes"
-        "MA" -> "Martes"
-        "MI" -> "Miercoles"
-        "JU" -> "Jueves"
-        "VI" -> "Viernes"
-        else -> dia
-    }
-}
 @Composable
 fun DetalleCarrera(
     cambiarPantalla: (String) -> Unit,
-    codigo: String
+    codigo: String,
+    horarioState: HorarioState
 ) {
     val viewModel: DetalleCarreraVM = viewModel()
     val state by viewModel.state.collectAsState()
@@ -85,6 +73,10 @@ fun DetalleCarrera(
                                     onClick = {
                                         viewModel.seleccionarGrupo(
                                             materia.code,
+                                            grupo
+                                        )
+                                        horarioState.agregarGrupo(
+                                            materia.name,
                                             grupo
                                         )
                                     }
