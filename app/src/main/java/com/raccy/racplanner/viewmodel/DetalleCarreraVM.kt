@@ -12,12 +12,24 @@ import kotlinx.coroutines.launch
 class DetalleCarreraVM : ViewModel() {
     private val repository = DetalleCarreraRepository()
     private val _state = MutableStateFlow<DetalleCarreraResponse?>(null)
+    private val _gruposSeleccionados = MutableStateFlow<Map<Int, String>>(emptyMap())
+
+    val gruposSeleccionados: StateFlow<Map<Int, String>> = _gruposSeleccionados.asStateFlow()
     val state: StateFlow<DetalleCarreraResponse?> = _state.asStateFlow()
 
     fun cargarCarrera(code: String) {
         _state.value = null
         viewModelScope.launch {
             _state.value = repository.getDetalleCarrera(code)
+        }
+    }
+
+    fun seleccionarGrupo(
+        codigoMateria: Int,
+        codigoGrupo: String
+    ) {
+        _gruposSeleccionados.value = _gruposSeleccionados.value.toMutableMap().apply {
+            this[codigoMateria] = codigoGrupo
         }
     }
 }

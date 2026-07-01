@@ -1,8 +1,12 @@
 package com.raccy.racplanner.screens
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import com.raccy.racplanner.viewmodel.DetalleCarreraVM
 
 private fun formatearHora(hora: String): String {
@@ -36,6 +41,7 @@ fun DetalleCarrera(
 ) {
     val viewModel: DetalleCarreraVM = viewModel()
     val state by viewModel.state.collectAsState()
+    val gruposSeleccionados by viewModel.gruposSeleccionados.collectAsState()
 
     LaunchedEffect(codigo) {
         viewModel.cargarCarrera(codigo)
@@ -65,10 +71,29 @@ fun DetalleCarrera(
                         modifier = Modifier.padding(start = 16.dp)
                     )
                     materia.groups.forEach { grupo ->
-                        Text(
-                            text = "Grupo: ${grupo.code} - ${grupo.teacher}",
-                            modifier = Modifier.padding(start = 32.dp)
-                        )
+                        Row (
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 32.dp)
+                                .selectable(
+                                    selected = gruposSeleccionados[materia.code] == grupo.code,
+                                    onClick = {
+                                        viewModel.seleccionarGrupo(
+                                            materia.code,
+                                            grupo.code
+                                        )
+                                    }
+                                ),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton (
+                                selected = gruposSeleccionados[materia.code] == grupo.code,
+                                onClick = null
+                            )
+                            Text(
+                                text = "Grupo: ${grupo.code} - ${grupo.teacher}"
+                            )
+                        }
                         grupo.schedule.forEach { horario ->
                             Text(
                                 text = "${formatearDia(horario.day)} ${formatearHora(horario.start)} - ${formatearHora(horario.end)}",
