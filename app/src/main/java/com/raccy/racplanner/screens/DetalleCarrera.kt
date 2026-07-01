@@ -42,6 +42,8 @@ fun DetalleCarrera(
     val viewModel: DetalleCarreraVM = viewModel()
     val state by viewModel.state.collectAsState()
     val gruposSeleccionados by viewModel.gruposSeleccionados.collectAsState()
+    val hayColision by viewModel.hayColision.collectAsState()
+    println("UI hayColision = $hayColision")
 
     LaunchedEffect(codigo) {
         viewModel.cargarCarrera(codigo)
@@ -60,6 +62,9 @@ fun DetalleCarrera(
                 Text("Codigo: ${state?.code ?: ""}")
                 Text("Nombre: ${state?.name ?: ""}")
                 Text("Semestre: ${state?.semester ?: ""}")
+                if (hayColision) {
+                    Text( text = "Hay choque de horarios :p")
+                }
             }
             state?.levels?.forEach { nivel ->
                 item {
@@ -76,22 +81,28 @@ fun DetalleCarrera(
                                 .fillMaxWidth()
                                 .padding(start = 32.dp)
                                 .selectable(
-                                    selected = gruposSeleccionados[materia.code] == grupo.code,
+                                    selected = gruposSeleccionados[materia.code]?.code == grupo.code,
                                     onClick = {
                                         viewModel.seleccionarGrupo(
                                             materia.code,
-                                            grupo.code
+                                            grupo
                                         )
                                     }
                                 ),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton (
-                                selected = gruposSeleccionados[materia.code] == grupo.code,
+                                selected = gruposSeleccionados[materia.code]?.code == grupo.code,
                                 onClick = null
                             )
                             Text(
                                 text = "Grupo: ${grupo.code} - ${grupo.teacher}"
+                            )
+                        }
+                        if (hayColision) {
+                            Text(
+                                text = "Hay choque de horarios :p", //aparece al inicio de la pantalla
+                                modifier = Modifier.padding(start = 48.dp)
                             )
                         }
                         grupo.schedule.forEach { horario ->
