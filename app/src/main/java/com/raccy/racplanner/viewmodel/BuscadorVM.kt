@@ -17,8 +17,23 @@ class BuscadorVM : ViewModel() {
 
     init {
         viewModelScope.launch {
-            val carreras = repository.getCarreras()
-            _state.value = _state.value.copy(carreras = carreras)
+            _state.value = _state.value.copy(
+                isLoading = true,
+                error = null
+            )
+            try {
+                val carreras = repository.getCarreras()
+                _state.value = _state.value.copy(
+                    carreras = carreras,
+                    isLoading = false,
+                    error = null
+                )
+            } catch (e: Exception) {
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    error = "No se pudieron cargar las carreras :("
+                )
+            }
         }
     }
 }

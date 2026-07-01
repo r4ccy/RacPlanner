@@ -28,6 +28,25 @@ fun BuscadorCarrera(
         Text("Buscador de carreras")
         Text("Carreras: ${state.carreras.size}")
 
+        when {
+            state.isLoading -> {Text("Cargando carreras...")}
+            state.error != null -> { state.error?.let { Text(it) }}
+            state.carreras.isEmpty() -> {Text("No hay carreras disponibles")}
+            else -> {
+                LazyColumn {
+                    items(state.carreras) { carrera ->
+                        Text(carrera.nombre)
+                        Button(
+                            onClick = {
+                                seleccionarCarrera(carrera.codigo.toString())
+                                cambiarPantalla("detalle")
+                            }
+                        ) { Text("Ver detalles") }
+                    }
+                }
+            }
+        }
+
         LazyColumn {
             items(state.carreras) { carrera ->
                 Text(carrera.nombre)
