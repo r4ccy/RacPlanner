@@ -1,5 +1,8 @@
 package com.raccy.racplanner.network.response
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CarreraResponse(
     val madeIn: String,
     val semester: String,

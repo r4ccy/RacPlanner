@@ -29,6 +29,7 @@ class BuscadorVM : ViewModel() {
                     error = null
                 )
             } catch (e: Exception) {
+                e.printStackTrace()
                 _state.value = _state.value.copy(
                     isLoading = false,
                     error = "No se pudieron cargar las carreras :("
