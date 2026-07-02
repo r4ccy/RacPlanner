@@ -30,8 +30,6 @@ fun DetalleCarrera(
     val viewModel: DetalleCarreraVM = viewModel()
     val state by viewModel.state.collectAsState()
     val gruposSeleccionados by viewModel.gruposSeleccionados.collectAsState()
-    val hayColision by viewModel.hayColision.collectAsState()
-    println("UI hayColision = $hayColision")
 
     LaunchedEffect(codigo) {
         viewModel.cargarCarrera(codigo)
@@ -50,9 +48,6 @@ fun DetalleCarrera(
                 Text("Codigo: ${state?.code ?: ""}")
                 Text("Nombre: ${state?.name ?: ""}")
                 Text("Semestre: ${state?.semester ?: ""}")
-                if (hayColision) {
-                    Text( text = "Hay choque de horarios :p")
-                }
             }
             state?.levels?.forEach { nivel ->
                 item {
@@ -89,12 +84,6 @@ fun DetalleCarrera(
                             )
                             Text(
                                 text = "Grupo: ${grupo.code} - ${grupo.teacher}"
-                            )
-                        }
-                        if (hayColision) {
-                            Text(
-                                text = "Hay choque de horarios :p", //aparece al inicio de la pantalla
-                                modifier = Modifier.padding(start = 48.dp)
                             )
                         }
                         grupo.schedule.forEach { horario ->
