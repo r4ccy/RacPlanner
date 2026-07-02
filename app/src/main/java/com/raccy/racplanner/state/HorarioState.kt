@@ -13,9 +13,10 @@ class HorarioState {
     private val _eventos =
         MutableStateFlow<List<EventoHorario>>(emptyList())
 
+    private val _gruposSeleccionados = MutableStateFlow<Map<Int, GroupResponse>>(emptyMap())
     val eventos: StateFlow<List<EventoHorario>> = _eventos.asStateFlow()
-
-    fun agregarGrupo(
+    val gruposSeleccionados: StateFlow<Map<Int, GroupResponse>> = _gruposSeleccionados.asStateFlow()
+    private fun agregarGrupo(
         codigoMateria: Int,
         nombreMateria: String,
         grupo: GroupResponse
@@ -29,12 +30,22 @@ class HorarioState {
         recalcularColisiones()
     }
 
-    fun vaciarHorario() {
-        _eventos.value = emptyList()
+    fun seleccionarGrupo(
+        codigoMateria: Int,
+        nombreMateria: String,
+        grupo: GroupResponse
+    ) {
+        _gruposSeleccionados.value = _gruposSeleccionados.value + (codigoMateria to grupo)
+        agregarGrupo(
+            codigoMateria,
+            nombreMateria,
+            grupo
+        )
     }
 
-    fun obtenerEventos(): List<EventoHorario> {
-        return _eventos.value
+    fun vaciarHorario() {
+        _gruposSeleccionados.value = emptyMap()
+        _eventos.value = emptyList()
     }
 
     private fun recalcularColisiones() {

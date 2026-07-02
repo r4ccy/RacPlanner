@@ -29,7 +29,7 @@ fun DetalleCarrera(
 ) {
     val viewModel: DetalleCarreraVM = viewModel()
     val state by viewModel.state.collectAsState()
-    val gruposSeleccionados by viewModel.gruposSeleccionados.collectAsState()
+    val gruposSeleccionados by horarioState.gruposSeleccionados.collectAsState()
 
     LaunchedEffect(codigo) {
         viewModel.cargarCarrera(codigo)
@@ -66,11 +66,7 @@ fun DetalleCarrera(
                                 .selectable(
                                     selected = gruposSeleccionados[materia.code]?.code == grupo.code,
                                     onClick = {
-                                        viewModel.seleccionarGrupo(
-                                            materia.code,
-                                            grupo
-                                        )
-                                        horarioState.agregarGrupo(
+                                        horarioState.seleccionarGrupo(
                                             materia.code,
                                             materia.name,
                                             grupo

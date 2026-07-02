@@ -1,9 +1,11 @@
 package com.raccy.racplanner.screens
 
+import android.service.autofill.OnClickAction
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,6 +26,13 @@ fun OrganizadorHor(
     Column(modifier = Modifier.padding(20.dp)) {
         Text("RacPlanner")
         Text("Organizador de Horario")
+
+        Button(
+            onClick = {
+                horarioState.vaciarHorario()
+            }
+        ) { Text("Vaciar horario") }
+
         if (eventos.isEmpty()) {
             Text("No hay materias Seleccionadas")
         } else {
