@@ -42,6 +42,9 @@ fun OrganizadorHor(
                             else
                             "Auxiliatura"
                         )
+                        if (evento.tieneColision) {
+                            Text("Conflicto de horario")
+                        }
                     }
                 }
             }

@@ -71,6 +71,7 @@ fun DetalleCarrera(
                                             grupo
                                         )
                                         horarioState.agregarGrupo(
+                                            materia.code,
                                             materia.name,
                                             grupo
                                         )

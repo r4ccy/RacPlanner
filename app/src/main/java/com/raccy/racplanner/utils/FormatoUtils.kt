@@ -7,6 +7,7 @@ fun formatearDia(dia: String): String {
         "MI" -> "Miércoles"
         "JU" -> "Jueves"
         "VI" -> "Viernes"
+        "SA" -> "Sábado"
         else -> dia
     }
 }

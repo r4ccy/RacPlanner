@@ -4,10 +4,12 @@ import com.raccy.racplanner.model.EventoHorario
 import com.raccy.racplanner.network.response.GroupResponse
 
 fun GroupResponse.toEventosHorario(
+    codigoMateria: Int,
     nombreMateria: String
 ): List<EventoHorario> {
     return schedule.map { horario ->
         EventoHorario(
+            codigoMateria = codigoMateria,
             materia = nombreMateria,
             grupo = code,
             docente = teacher,
