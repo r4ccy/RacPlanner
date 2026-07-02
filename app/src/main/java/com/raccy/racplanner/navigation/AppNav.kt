@@ -1,12 +1,17 @@
 package com.raccy.racplanner.navigation
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -34,78 +39,105 @@ fun AppNav() {
         HorarioState()
     }
 
-    Scaffold { innerPadding ->
+    Scaffold (
+        bottomBar = {
+            NavigationBar (
+                modifier = Modifier.height(88.dp),
+                tonalElevation = 0.dp
+            ) {
+                NavigationBarItem(
+                    selected = pantalla == BUSCADOR,
+                    onClick = { pantalla = BUSCADOR },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Buscar"
+                        )
+                    },
+                    label = {
+                        Text("Buscar")
+                    }
+                )
+                NavigationBarItem(
+                    selected = pantalla == ORGANIZADOR,
+                    onClick = { pantalla = ORGANIZADOR },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.CalendarMonth,
+                            contentDescription = "Organizar"
+                        )
+                    },
+                    label = {
+                        Text("Organizar")
+                    }
+                )
+                NavigationBarItem(
+                    selected = pantalla == PERFIL,
+                    onClick = { pantalla = PERFIL },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Perfil"
+                        )
+                    },
+                    label = {
+                        Text("Perfil")
+                    }
+                )
 
+                NavigationBarItem(
+                    selected = pantalla == AJUSTES,
+                    onClick = { pantalla = AJUSTES },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "Ajustes"
+                        )
+                    },
+                    label = {
+                        Text("Ajustes")
+                    }
+                )
+            }
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
+            when (pantalla) {
 
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+                BUSCADOR -> BuscadorCarrera(
+                    cambiarPantalla = { pantalla = it },
+                    seleccionarCarrera = { codigo ->
+                        codCarrera = codigo
+                    }
+                )
 
-                when (pantalla) {
-
-                    BUSCADOR -> BuscadorCarrera(
+                ORGANIZADOR ->
+                    OrganizadorHor(
                         cambiarPantalla = { pantalla = it },
-                        seleccionarCarrera = { codigo ->
-                            codCarrera = codigo
-                        }
+                        horarioState = horarioState
                     )
 
-                    ORGANIZADOR ->
-                        OrganizadorHor(
-                            cambiarPantalla = { pantalla = it },
-                            horarioState = horarioState
-                        )
+                DETALLE ->
+                    DetalleCarrera(
+                        cambiarPantalla = { pantalla = it },
+                        codigo = codCarrera,
+                        horarioState = horarioState
+                    )
 
-                    DETALLE ->
-                        DetalleCarrera(
-                            cambiarPantalla = { pantalla = it },
-                            codigo = codCarrera,
-                            horarioState = horarioState
-                        )
+                PERFIL ->
+                    PerfilUs(
+                        cambiarPantalla = { pantalla = it }
+                    )
 
-                    PERFIL ->
-                        PerfilUs(
-                            cambiarPantalla = { pantalla = it }
-                        )
-
-                    AJUSTES ->
-                        Ajustes(
-                            cambiarPantalla = { pantalla = it }
-                        )
-                }
+                AJUSTES ->
+                    Ajustes(
+                        cambiarPantalla = { pantalla = it }
+                    )
             }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-
-                Button(onClick = { pantalla = BUSCADOR }) {
-                    Text("Buscar")
-                }
-
-                Button(onClick = { pantalla = ORGANIZADOR }) {
-                    Text("Organizar")
-                }
-
-                Button(onClick = { pantalla = PERFIL }) {
-                    Text("Perfil")
-                }
-
-                Button(onClick = { pantalla = AJUSTES }) {
-                    Text("Ajustes")
-                }
-
-            }
-
         }
-
     }
 }
