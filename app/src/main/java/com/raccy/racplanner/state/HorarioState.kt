@@ -30,17 +30,30 @@ class HorarioState {
         recalcularColisiones()
     }
 
+    private fun quitarGrupo(codigoMateria: Int) {
+        _gruposSeleccionados.value = _gruposSeleccionados.value - codigoMateria
+        _eventos.value = _eventos.value.filter {
+            it.codigoMateria != codigoMateria
+        }
+        recalcularColisiones()
+    }
+
     fun seleccionarGrupo(
         codigoMateria: Int,
         nombreMateria: String,
         grupo: GroupResponse
     ) {
-        _gruposSeleccionados.value = _gruposSeleccionados.value + (codigoMateria to grupo)
-        agregarGrupo(
-            codigoMateria,
-            nombreMateria,
-            grupo
-        )
+        val grupoActual = _gruposSeleccionados.value[codigoMateria]
+        if (grupoActual?.code == grupo.code) {
+            quitarGrupo(codigoMateria)
+        } else {
+            _gruposSeleccionados.value = _gruposSeleccionados.value + (codigoMateria to grupo)
+            agregarGrupo(
+                codigoMateria,
+                nombreMateria,
+                grupo
+            )
+        }
     }
 
     fun vaciarHorario() {
