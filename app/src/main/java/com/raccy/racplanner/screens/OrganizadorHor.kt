@@ -4,9 +4,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -59,7 +65,8 @@ fun OrganizadorHor(
             Text("No hay materias en el horario")
         } else {
             LazyColumn (
-                modifier = Modifier.padding(20.dp),
+                modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 ordenDias.forEach { dia ->
@@ -75,17 +82,46 @@ fun OrganizadorHor(
                         )
                     }
                     items(eventosDelDia) { evento ->
-                        Text("${formatearHora(evento.inicio)} - ${formatearHora(evento.fin)}")
-                        Text(evento.materia)
-                        Text(evento.docente)
-                        Text(
-                            text = if (evento.esTeoria)
-                            "Teórica"
-                            else
-                            "Auxiliatura"
-                        )
-                        if (evento.tieneColision) {
-                            Text("Conflicto de horario")
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 4.dp
+                            )
+                        ) {
+                            Column( modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text(
+                                    text = "${formatearHora(evento.inicio)} - ${formatearHora(evento.fin)}",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = "${evento.materia} · ${evento.aula}",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    text = evento.docente,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = if (evento.esTeoria) {
+                                        "Teoría"
+                                    } else {
+                                        "Auxiliatura"
+                                    },
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                                if (evento.tieneColision) {
+                                    Spacer(modifier = Modifier.height(6.dp))
+                                    Text(
+                                        text = "Choque de horario",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.error
+                                    )
+                                }
+                            }
                         }
                     }
                 }
