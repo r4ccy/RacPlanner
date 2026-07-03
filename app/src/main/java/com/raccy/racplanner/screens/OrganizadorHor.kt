@@ -25,7 +25,7 @@ fun OrganizadorHor(
     val eventosPorDia = eventos.groupBy { it.dia }
     Column(modifier = Modifier.padding(20.dp)) {
         Text("RacPlanner")
-        Text("Organizador de Horario")
+        Text("Horario")
 
         Button(
             onClick = {

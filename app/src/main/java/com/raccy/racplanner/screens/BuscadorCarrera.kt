@@ -44,7 +44,7 @@ fun BuscadorCarrera(
             style = MaterialTheme.typography.headlineMedium
         )
         Text(
-            text = "Buscador de Carreras",
+            text = "Carreras",
             style = MaterialTheme.typography.headlineLarge
         )
         Text(

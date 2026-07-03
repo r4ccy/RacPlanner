@@ -13,7 +13,7 @@ fun PerfilUs(
 ) {
     Column(modifier = Modifier.padding(20.dp)) {
         Text("RacPlanner")
-        Text("Perfil del estudiante")
+        Text("Perfil")
 
         Text("Nombre:")
         Text("Anne Heart")
