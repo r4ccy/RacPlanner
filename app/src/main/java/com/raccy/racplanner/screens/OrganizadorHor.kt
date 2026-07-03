@@ -1,11 +1,14 @@
 package com.raccy.racplanner.screens
 
-import android.service.autofill.OnClickAction
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,9 +26,28 @@ fun OrganizadorHor(
 ) {
     val eventos by horarioState.eventos.collectAsState()
     val eventosPorDia = eventos.groupBy { it.dia }
-    Column(modifier = Modifier.padding(20.dp)) {
-        Text("RacPlanner")
-        Text("Horario")
+    val ordenDias = listOf(
+        "LU",
+        "MA",
+        "MI",
+        "JU",
+        "VI",
+        "SA"
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(12.dp)
+    ) {
+        Text(
+            text = "RacPlanner",
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Text(
+            text = "Horario",
+            style = MaterialTheme.typography.headlineLarge
+        )
 
         Button(
             onClick = {
@@ -34,12 +56,23 @@ fun OrganizadorHor(
         ) { Text("Vaciar horario") }
 
         if (eventos.isEmpty()) {
-            Text("No hay materias Seleccionadas")
+            Text("No hay materias en el horario")
         } else {
-            LazyColumn (modifier = Modifier.padding(20.dp)) {
-                eventosPorDia.forEach { (dia, eventosDelDia) ->
+            LazyColumn (
+                modifier = Modifier.padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                ordenDias.forEach { dia ->
+                    val eventosDelDia = eventosPorDia[dia]?: return@forEach
+
                     item {
-                        Text(formatearDia(dia))
+                        HorizontalDivider()
+                        Text(
+                            text = "${formatearDia(dia)} · ${eventosDelDia.size} ${
+                                if (eventosDelDia.size == 1) "clase" else "clases"
+                            }",
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
                     items(eventosDelDia) { evento ->
                         Text("${formatearHora(evento.inicio)} - ${formatearHora(evento.fin)}")
