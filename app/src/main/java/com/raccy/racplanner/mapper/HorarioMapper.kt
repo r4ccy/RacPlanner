@@ -16,7 +16,8 @@ fun GroupResponse.toEventosHorario(
             dia = horario.day,
             inicio = horario.start,
             fin = horario.end,
-            esTeoria = horario.isClass
+            esTeoria = horario.isClass,
+            aula = horario.room
         )
     }
 }
