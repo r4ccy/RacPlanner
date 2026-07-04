@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import com.raccy.racplanner.state.HorarioState
 import com.raccy.racplanner.utils.formatearDia
 import com.raccy.racplanner.utils.formatearHora
+import com.raccy.racplanner.utils.ordenDias
 
 enum class VistaHorario {
     LISTA,
@@ -48,14 +49,6 @@ fun OrganizadorHor(
     val eventos by horarioState.eventos.collectAsState()
     var vista by remember { mutableStateOf(VistaHorario.LISTA) }
     val eventosPorDia = eventos.groupBy { it.dia }
-    val ordenDias = listOf(
-        "LU",
-        "MA",
-        "MI",
-        "JU",
-        "VI",
-        "SA"
-    )
 
     Column(
         modifier = Modifier
@@ -175,7 +168,9 @@ fun OrganizadorHor(
                     }
                 }
                 VistaHorario.GRILLA -> {
-                    Text("Coming soooon")
+                    HorarioGrilla(
+                        eventos = eventos
+                    )
                 }
             }
         }
