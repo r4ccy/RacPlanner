@@ -63,6 +63,7 @@ fun OrganizadorHor(
             text = "Horario",
             style = MaterialTheme.typography.headlineLarge
         )
+        Spacer(modifier = Modifier.height(12.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -87,9 +88,9 @@ fun OrganizadorHor(
                 Icon(
                     imageVector =
                         if (vista == VistaHorario.LISTA)
-                            Icons.Default.CalendarViewDay
+                            Icons.Default.CalendarViewMonth
                         else
-                            Icons.Default.CalendarViewMonth,
+                            Icons.Default.CalendarViewDay,
                     contentDescription = null
                 )
             }
