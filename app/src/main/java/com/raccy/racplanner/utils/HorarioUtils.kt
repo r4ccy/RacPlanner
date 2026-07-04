@@ -1,6 +1,5 @@
 package com.raccy.racplanner.utils
 
-import com.raccy.racplanner.network.response.ScheduleResponse
 import com.raccy.racplanner.model.EventoHorario
 
 val ordenDias = listOf(
@@ -56,20 +55,6 @@ fun overlaps(
 
     return inicioHora1 < finHora2 &&
             inicioHora2 < finHora1
-}
-
-fun overlaps(
-    horario1: ScheduleResponse,
-    horario2: ScheduleResponse
-): Boolean {
-    return overlaps(
-        horario1.day,
-        horario1.start,
-        horario1.end,
-        horario2.day,
-        horario2.start,
-        horario2.end
-    )
 }
 
 fun overlaps(
