@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raccy.racplanner.repository.DetalleCarreraRepository
 import com.raccy.racplanner.network.response.DetalleCarreraResponse
-import com.raccy.racplanner.network.response.GroupResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

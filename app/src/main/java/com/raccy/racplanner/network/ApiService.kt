@@ -1,7 +1,6 @@
 package com.raccy.racplanner.network
 
 import retrofit2.http.GET
-import com.raccy.racplanner.model.Carrera
 import com.raccy.racplanner.network.response.CarreraResponse
 import com.raccy.racplanner.network.response.DetalleCarreraResponse
 import retrofit2.http.Path
