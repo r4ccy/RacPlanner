@@ -117,26 +117,20 @@ fun AppNav() {
 
                 ORGANIZADOR ->
                     OrganizadorHor(
-                        cambiarPantalla = { pantalla = it },
                         horarioState = horarioState
                     )
 
                 DETALLE ->
                     DetalleCarrera(
-                        cambiarPantalla = { pantalla = it },
                         codigo = codCarrera,
                         horarioState = horarioState
                     )
 
                 PERFIL ->
-                    PerfilUs(
-                        cambiarPantalla = { pantalla = it }
-                    )
+                    PerfilUs()
 
                 AJUSTES ->
-                    Ajustes(
-                        cambiarPantalla = { pantalla = it }
-                    )
+                    Ajustes()
             }
         }
     }
