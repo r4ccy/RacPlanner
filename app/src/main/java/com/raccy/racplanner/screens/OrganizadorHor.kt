@@ -43,7 +43,6 @@ enum class VistaHorario {
 
 @Composable
 fun OrganizadorHor(
-    cambiarPantalla: (String) -> Unit,
     horarioState: HorarioState
 ) {
     val eventos by horarioState.eventos.collectAsState()

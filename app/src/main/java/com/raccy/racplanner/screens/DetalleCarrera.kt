@@ -40,7 +40,6 @@ import com.raccy.racplanner.viewmodel.DetalleCarreraVM
 
 @Composable
 fun DetalleCarrera(
-    cambiarPantalla: (String) -> Unit,
     codigo: String,
     horarioState: HorarioState
 ) {

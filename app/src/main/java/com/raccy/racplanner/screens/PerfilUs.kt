@@ -24,9 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 
 @Composable
-fun PerfilUs(
-    cambiarPantalla: (String) -> Unit
-) {
+fun PerfilUs() {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(12.dp),

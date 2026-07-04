@@ -22,7 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -86,7 +85,7 @@ fun BuscadorCarrera(
                                 ) {
                                     Button(
                                         onClick = {
-                                            seleccionarCarrera(carrera.codigo.toString())
+                                            seleccionarCarrera(carrera.codigo)
                                             cambiarPantalla("detalle")
                                         }
                                     ) { Text("Ver detalles") }

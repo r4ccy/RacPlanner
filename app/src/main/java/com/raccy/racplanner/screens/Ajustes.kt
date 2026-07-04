@@ -22,9 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Ajustes(
-    cambiarPantalla: (String) -> Unit
-) {
+fun Ajustes() {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(12.dp)
