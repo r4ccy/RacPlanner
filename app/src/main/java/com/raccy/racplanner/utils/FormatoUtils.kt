@@ -12,6 +12,18 @@ fun formatearDia(dia: String): String {
     }
 }
 
+fun formatearDiaGrilla(dia: String): String {
+    return when (dia) {
+        "LU" -> "Lun"
+        "MA" -> "Mar"
+        "MI" -> "Mié"
+        "JU" -> "Jue"
+        "VI" -> "Vie"
+        "SA" -> "Sáb"
+        else -> dia
+    }
+}
+
 fun formatearHora(hora: String): String {
     return hora.padStart(4, '0').let {
         "${it.substring(0, 2)}:${it.substring(2)}"

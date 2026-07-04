@@ -3,6 +3,39 @@ package com.raccy.racplanner.utils
 import com.raccy.racplanner.network.response.ScheduleResponse
 import com.raccy.racplanner.model.EventoHorario
 
+val ordenDias = listOf(
+    "LU",
+    "MA",
+    "MI",
+    "JU",
+    "VI",
+    "SA"
+)
+
+val horasGrilla = listOf(
+    "645",
+    "730",
+    "815",
+    "900",
+    "945",
+    "1030",
+    "1115",
+    "1200",
+    "1245",
+    "1330",
+    "1415",
+    "1500",
+    "1545",
+    "1630",
+    "1715",
+    "1800",
+    "1845",
+    "1930",
+    "2015",
+    "2100",
+    "2145"
+)
+
 fun overlaps(
     dia1: String,
     inicio1: String,
