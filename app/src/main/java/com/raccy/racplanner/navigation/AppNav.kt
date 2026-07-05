@@ -17,6 +17,7 @@ import com.raccy.racplanner.screens.BuscadorCarrera
 import com.raccy.racplanner.screens.DetalleCarrera
 import com.raccy.racplanner.screens.OrganizadorHor
 import com.raccy.racplanner.screens.PerfilUs
+import com.raccy.racplanner.state.HorarioState
 
 @Composable
 fun AppNav() {
@@ -27,6 +28,10 @@ fun AppNav() {
 
     var codCarrera by remember {
         mutableStateOf("")
+    }
+
+    val horarioState = remember {
+        HorarioState()
     }
 
     Scaffold { innerPadding ->
@@ -52,13 +57,15 @@ fun AppNav() {
 
                     ORGANIZADOR ->
                         OrganizadorHor(
-                            cambiarPantalla = { pantalla = it }
+                            cambiarPantalla = { pantalla = it },
+                            horarioState = horarioState
                         )
 
                     DETALLE ->
                         DetalleCarrera(
                             cambiarPantalla = { pantalla = it },
-                            codigo = codCarrera
+                            codigo = codCarrera,
+                            horarioState = horarioState
                         )
 
                     PERFIL ->

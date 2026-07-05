@@ -1,7 +1,13 @@
 package com.raccy.racplanner.screens
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.raccy.racplanner.viewmodel.BuscadorVM
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,50 +20,43 @@ fun BuscadorCarrera(
     seleccionarCarrera: (String) -> Unit
 ) {
 
-    Column( modifier = Modifier.padding(20.dp)) {
+    val viewModel: BuscadorVM = viewModel()
+    val state by viewModel.state.collectAsState()
+
+    Column(modifier = Modifier.padding(20.dp)) {
         Text("RacPlanner")
         Text("Buscador de carreras")
+        Text("Carreras: ${state.carreras.size}")
 
-        Text("Ing. Informatica")
-        Button(
-            onClick = {
-                seleccionarCarrera("123-1")
-                cambiarPantalla("detalle") }
-        ) { Text("Ver detalles")}
+        when {
+            state.isLoading -> {Text("Cargando carreras...")}
+            state.error != null -> { state.error?.let { Text(it) }}
+            state.carreras.isEmpty() -> {Text("No hay carreras disponibles")}
+            else -> {
+                LazyColumn {
+                    items(state.carreras) { carrera ->
+                        Text(carrera.nombre)
+                        Button(
+                            onClick = {
+                                seleccionarCarrera(carrera.codigo.toString())
+                                cambiarPantalla("detalle")
+                            }
+                        ) { Text("Ver detalles") }
+                    }
+                }
+            }
+        }
 
-        Text("Ing. Electronica")
-        Button(
-            onClick = {
-                seleccionarCarrera("123-2")
-                cambiarPantalla("detalle") }
-        ) { Text("Ver detalles")}
-
-        Text("Ing. Mecatronica")
-        Button(
-            onClick = {
-                seleccionarCarrera("123-3")
-                cambiarPantalla("detalle") }
-        ) { Text("Ver detalles")}
-
-        Text("Ing. Industrial")
-        Button(
-            onClick = {
-                seleccionarCarrera("123-4")
-                cambiarPantalla("detalle") }
-        ) { Text("Ver detalles")}
-
-        Text("Ing. Civil")
-        Button(
-            onClick = {
-                seleccionarCarrera("123-5")
-                cambiarPantalla("detalle") }
-        ) { Text("Ver detalles")}
-
-        Text("Ing. Sistemas")
-        Button(
-            onClick = {
-                seleccionarCarrera("123-6")
-                cambiarPantalla("detalle") }
-        ) { Text("Ver detalles")}
+        LazyColumn {
+            items(state.carreras) { carrera ->
+                Text(carrera.nombre)
+                Button(
+                    onClick = {
+                        seleccionarCarrera(carrera.codigo.toString())
+                        cambiarPantalla("detalle")
+                    }
+                ) { Text("Ver detalles") }
+            }
+        }
     }
 }
