@@ -5,8 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.raccy.racplanner.datastore.SettingsDataStore
 import com.raccy.racplanner.navigation.AppNav
 import com.raccy.racplanner.ui.theme.RacPlannerTheme
 
@@ -20,12 +23,15 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            RacPlannerTheme {
+            val temaOscuro by SettingsDataStore
+                .temaOscuro(this)
+                .collectAsState(initial = false)
 
+            RacPlannerTheme(
+                darkTheme = temaOscuro
+            ) {
                 AppNav()
-
             }
-
         }
     }
 }

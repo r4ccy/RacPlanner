@@ -1,12 +1,6 @@
 package com.raccy.racplanner.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Info
@@ -15,38 +9,88 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.raccy.racplanner.viewmodel.AjustesVM
 
 @Composable
 fun Ajustes() {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(12.dp)
+
+    val viewModel: AjustesVM = viewModel()
+    val temaOscuro by viewModel.temaOscuro.collectAsState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(12.dp)
     ) {
         Text(
             text = "RacPlanner",
             style = MaterialTheme.typography.headlineMedium
         )
+
         Text(
             text = "Ajustes",
             style = MaterialTheme.typography.headlineLarge
         )
+
         Spacer(modifier = Modifier.height(12.dp))
+
         Text(
             text = "Personaliza la apariencia de la aplicación y consulta información del proyecto",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
         Spacer(modifier = Modifier.height(20.dp))
-        OpcionAjuste(
-            icono = Icons.Default.Palette,
-            titulo = "Tema",
-            valor = "Tema del sistema"
-        )
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Palette,
+                    contentDescription = null
+                )
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = "Tema oscuro",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+
+                    Text(
+                        text = if (temaOscuro) "Activado" else "Desactivado",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
+                Switch(
+                    checked = temaOscuro,
+                    onCheckedChange = {
+                        viewModel.cambiarTema(it)
+                    }
+                )
+            }
+        }
+
         Spacer(modifier = Modifier.height(12.dp))
         OpcionAjuste(
             icono = Icons.Default.Info,
@@ -75,8 +119,11 @@ private fun OpcionAjuste(
                 imageVector = icono,
                 contentDescription = null
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Column(modifier = Modifier.weight(1f)) {
+
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(
                     text = titulo,
                     style = MaterialTheme.typography.titleMedium
@@ -88,7 +135,7 @@ private fun OpcionAjuste(
                 )
             }
             Icon(
-                imageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null
             )
         }
