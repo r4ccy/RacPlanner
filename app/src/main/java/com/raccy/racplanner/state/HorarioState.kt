@@ -31,7 +31,7 @@ class HorarioState {
     }
 
     private fun quitarGrupo(codigoMateria: Int) {
-        _gruposSeleccionados.value = _gruposSeleccionados.value - codigoMateria
+        _gruposSeleccionados.value -= codigoMateria
         _eventos.value = _eventos.value.filter {
             it.codigoMateria != codigoMateria
         }
@@ -47,7 +47,7 @@ class HorarioState {
         if (grupoActual?.code == grupo.code) {
             quitarGrupo(codigoMateria)
         } else {
-            _gruposSeleccionados.value = _gruposSeleccionados.value + (codigoMateria to grupo)
+            _gruposSeleccionados.value += codigoMateria to grupo
             agregarGrupo(
                 codigoMateria,
                 nombreMateria,

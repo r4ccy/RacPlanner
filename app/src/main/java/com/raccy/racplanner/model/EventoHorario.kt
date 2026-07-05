@@ -9,5 +9,6 @@ data class EventoHorario(
     val inicio: String,
     val fin: String,
     val esTeoria: Boolean,
-    val tieneColision: Boolean = false
+    val tieneColision: Boolean = false,
+    val aula: String
 )

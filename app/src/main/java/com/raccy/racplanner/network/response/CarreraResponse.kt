@@ -11,5 +11,5 @@ data class CarreraResponse(
     val code: Int,
     val name: String,
     val url: String,
-    val updatet_at: String
+    val updatedAt: String
 )
