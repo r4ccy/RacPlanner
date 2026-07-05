@@ -19,12 +19,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
+import com.raccy.racplanner.state.HorarioState
 
 @Composable
-fun PerfilUs() {
+fun PerfilUs(
+    horarioState: HorarioState
+) {
+    val materias by horarioState.nombresMaterias.collectAsState()
+    val carreras by horarioState.carreras.collectAsState()
+
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(12.dp),
@@ -67,35 +75,64 @@ fun PerfilUs() {
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Anne Heart",
+                    text = "Postulante",
                     style = MaterialTheme.typography.titleLarge
                 )
                 Text(
-                    text = "anne.heart@umss.edu.bo",
+                    text = "RacPlanner",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Spacer(modifier = Modifier.height(12.dp))
                 HorizontalDivider(modifier = Modifier.padding(12.dp))
                 Text(
                     text = "Carrera",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium
                 )
-                Text(
-                    text = "Ingeniería Informática",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                if (carreras.isEmpty()) {
+                    Text(
+                        text = "No hay carreras seleccionadas",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else {
+                    carreras.values.forEach { carrera ->
+                        Text(
+                            text = "• $carrera",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
                 HorizontalDivider(modifier = Modifier.padding(12.dp))
                 Text(
                     text = "Materias",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium
                 )
-                Text(
-                    text = "6 materias en el horario...",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    if (materias.isEmpty()) {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "No hay materias seleccionadas",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    } else {
+                        materias.values.forEach { materia ->
+                            Text(
+                                text = "• $materia",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
             }
         }
     }

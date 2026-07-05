@@ -16,7 +16,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.raccy.racplanner.RacPlannerApp
 import com.raccy.racplanner.screens.Ajustes
 import com.raccy.racplanner.screens.BuscadorCarrera
 import com.raccy.racplanner.screens.DetalleCarrera
@@ -35,8 +37,25 @@ fun AppNav() {
         mutableStateOf("")
     }
 
+    val context = LocalContext.current
+    val app = context.applicationContext as RacPlannerApp
+    val repository = remember {
+        app.horarioRepository
+    }
+
+    val detalleCache = remember {
+        app.detalleCarreraCacheRepository
+    }
+
     val horarioState = remember {
-        HorarioState()
+        HorarioState(
+            repository = repository,
+            detalleCache = detalleCache
+        )
+    }
+
+    LaunchedEffect(Unit) {
+        horarioState.cargarHorario()
     }
 
     Scaffold (
@@ -127,7 +146,7 @@ fun AppNav() {
                     )
 
                 PERFIL ->
-                    PerfilUs()
+                    PerfilUs( horarioState = horarioState )
 
                 AJUSTES ->
                     Ajustes()
