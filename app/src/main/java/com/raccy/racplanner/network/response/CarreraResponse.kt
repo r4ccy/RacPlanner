@@ -1,5 +1,6 @@
 package com.raccy.racplanner.network.response
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,5 +12,7 @@ data class CarreraResponse(
     val code: Int,
     val name: String,
     val url: String,
+
+    @SerialName ("updatet_at")
     val updatedAt: String
 )
