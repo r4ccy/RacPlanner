@@ -1,7 +1,13 @@
 # RacPlanner
 
-RacPlanner es una aplicaciÛn mÛvil para la organizaciÛn de horarios acadÈmicos. 
-Permite consultar las carreras ofertadas, seleccionar grupos, visualizar el horario semanal y acceder a la informaciÛn del postulante, con soporte para persistencia local y funcionamiento offline
+RacPlanner es una aplicaci√≥n m√≥vil para la organizaci√≥n de horarios acad√©micos.
+Permite consultar las carreras ofertadas, seleccionar grupos, visualizar el horario semanal y acceder a la informaci√≥n del postulante, con soporte para persistencia local y funcionamiento offline.
+
+## Descargar la aplicaci√≥n
+
+La versi√≥n m√°s reciente se encuentra disponible en la secci√≥n **Releases** del repositorio.
+
+Versi√≥n actual: **v1.0.0**
 
 ## Requisitos
 
@@ -11,25 +17,21 @@ Permite consultar las carreras ofertadas, seleccionar grupos, visualizar el hora
 
 ## Compilar el proyecto
 
-1. Clonar el repositorio
-2. Abrir el proyecto en Android Studio
-3. Esperar a que Gradle sincronice las dependencias
-4. Ejecutar la aplicaciÛn desde Android Studio
+1. Clonar el repositorio.
+2. Abrir el proyecto en Android Studio.
+3. Esperar a que Gradle sincronice las dependencias.
+4. Ejecutar la aplicaci√≥n desde Android Studio.
 
 ## Generar APK Release
 
-1. Ir a **Build ? Generate Signed Bundle / APK**
-2. Seleccionar **APK**
-3. Elegir el keystore
-4. Seleccionar la variante **release**
-5. Finalizar la generaciÛn
+1. Ir a **Build ‚Üí Generate Signed Bundle / APK**.
+2. Seleccionar **APK**.
+3. Elegir el keystore.
+4. Seleccionar la variante **release**.
+5. Finalizar la generaci√≥n.
 
 El APK generado se encuentra en:
 
 ```text
 app/release/app-release.apk
 ```
-
-## Release
-
-VersiÛn: **v1.0.0**
