@@ -21,8 +21,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.raccy.racplanner.RacPlannerApp
+import com.raccy.racplanner.repository.CarreraRepository
+import com.raccy.racplanner.viewmodel.BuscadorVMFactory
 
 @Composable
 fun BuscadorCarrera(
@@ -30,7 +35,18 @@ fun BuscadorCarrera(
     seleccionarCarrera: (String) -> Unit
 ) {
 
-    val viewModel: BuscadorVM = viewModel()
+    val context = LocalContext.current
+    val app = context.applicationContext as RacPlannerApp
+    val factory = remember {
+        BuscadorVMFactory(
+            CarreraRepository(
+                app.carreraCacheRepository
+            )
+        )
+    }
+    val viewModel: BuscadorVM = viewModel(
+        factory = factory
+    )
     val state by viewModel.state.collectAsState()
 
     Column(

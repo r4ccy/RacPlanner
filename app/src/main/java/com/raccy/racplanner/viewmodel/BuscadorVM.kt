@@ -9,20 +9,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class BuscadorVM : ViewModel() {
+class BuscadorVM(
+    private val repository: CarreraRepository
+) : ViewModel() {
     private val _state = MutableStateFlow(BuscadorState())
     val state: StateFlow<BuscadorState> = _state.asStateFlow()
 
-    private val repository = CarreraRepository()
-
-    init {
+    private fun cargarCarreras() {
         viewModelScope.launch {
             _state.value = _state.value.copy(
                 isLoading = true,
                 error = null
             )
+
             try {
                 val carreras = repository.getCarreras()
+
                 _state.value = _state.value.copy(
                     carreras = carreras,
                     isLoading = false,
@@ -36,5 +38,9 @@ class BuscadorVM : ViewModel() {
                 )
             }
         }
+    }
+
+    init {
+        cargarCarreras()
     }
 }

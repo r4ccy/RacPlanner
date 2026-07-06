@@ -28,23 +28,39 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.raccy.racplanner.RacPlannerApp
 import com.raccy.racplanner.network.response.GroupResponse
 import com.raccy.racplanner.network.response.NivelResponse
 import com.raccy.racplanner.network.response.SubjectResponse
+import com.raccy.racplanner.repository.DetalleCarreraRepository
 import com.raccy.racplanner.state.HorarioState
 import com.raccy.racplanner.utils.formatearDiaGrilla
 import com.raccy.racplanner.utils.formatearHora
 import com.raccy.racplanner.viewmodel.DetalleCarreraVM
+import com.raccy.racplanner.viewmodel.DetalleCarreraVMFactory
 
 @Composable
 fun DetalleCarrera(
     codigo: String,
     horarioState: HorarioState
 ) {
-    val viewModel: DetalleCarreraVM = viewModel()
+    val context = LocalContext.current
+    val app = context.applicationContext as RacPlannerApp
+    val factory = remember {
+        DetalleCarreraVMFactory(
+            DetalleCarreraRepository(
+                app.detalleCarreraCacheRepository
+            )
+        )
+    }
+    val viewModel: DetalleCarreraVM = viewModel(
+        factory = factory
+    )
     val state by viewModel.state.collectAsState()
+    val error by viewModel.error.collectAsState()
     val gruposSeleccionados by horarioState.gruposSeleccionados.collectAsState()
 
     LaunchedEffect(codigo) {
@@ -78,13 +94,22 @@ fun DetalleCarrera(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (state == null) {
+            if (error != null) {
+                item {
+                    Text(
+                        text = error!!,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            } else if (state == null) {
                 item {
                     Text("Cargando...")
                 }
             } else {
                 items(state?.levels ?: emptyList()) { nivel ->
                     NivelItem(
+                        codigoCarrera = codigo,
+                        nombreCarrera = state?.name ?: "",
                         nivel = nivel,
                         horarioState = horarioState,
                         gruposSeleccionados = gruposSeleccionados
@@ -97,6 +122,8 @@ fun DetalleCarrera(
 
 @Composable
 fun NivelItem(
+    codigoCarrera: String,
+    nombreCarrera: String,
     nivel: NivelResponse,
     horarioState: HorarioState,
     gruposSeleccionados: Map<Int, GroupResponse>
@@ -142,6 +169,8 @@ fun NivelItem(
         if (expandido) {
             nivel.subjects.forEach { materia ->
                 MateriaItem(
+                    codigoCarrera = codigoCarrera,
+                    nombreCarrera = nombreCarrera,
                     materia = materia,
                     horarioState = horarioState,
                     gruposSeleccionados = gruposSeleccionados
@@ -153,6 +182,8 @@ fun NivelItem(
 
 @Composable
 fun MateriaItem(
+    codigoCarrera: String,
+    nombreCarrera: String,
     materia: SubjectResponse,
     horarioState: HorarioState,
     gruposSeleccionados: Map<Int, GroupResponse>
@@ -197,6 +228,8 @@ fun MateriaItem(
         if (expandido) {
             materia.groups.forEachIndexed { index, grupo ->
                 GrupoItem(
+                    codigoCarrera = codigoCarrera,
+                    nombreCarrera = nombreCarrera,
                     materia = materia,
                     grupo = grupo,
                     horarioState = horarioState,
@@ -212,6 +245,8 @@ fun MateriaItem(
 
 @Composable
 fun GrupoItem(
+    codigoCarrera: String,
+    nombreCarrera: String,
     materia: SubjectResponse,
     grupo: GroupResponse,
     horarioState: HorarioState,
@@ -224,9 +259,11 @@ fun GrupoItem(
             .fillMaxWidth()
             .clickable{
                 horarioState.seleccionarGrupo(
-                    materia.code,
-                    materia.name,
-                    grupo
+                    codigoCarrera = codigoCarrera,
+                    nombreCarrera = nombreCarrera,
+                    codigoMateria = materia.code,
+                    nombreMateria = materia.name,
+                    grupo = grupo
                 )
             }
             .padding(start = 56.dp, top = 4.dp, bottom = 4.dp),

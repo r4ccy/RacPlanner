@@ -9,16 +9,26 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class DetalleCarreraVM : ViewModel() {
-    private val repository = DetalleCarreraRepository()
+class DetalleCarreraVM(
+    private val repository: DetalleCarreraRepository
+) : ViewModel() {
     private val _state = MutableStateFlow<DetalleCarreraResponse?>(null)
+    private val _error = MutableStateFlow<String?>(null)
 
     val state: StateFlow<DetalleCarreraResponse?> = _state.asStateFlow()
+    val error: StateFlow<String?> = _error.asStateFlow()
 
     fun cargarCarrera(code: String) {
         _state.value = null
+        _error.value = null
         viewModelScope.launch {
-            _state.value = repository.getDetalleCarrera(code)
+            try {
+                _state.value = repository.getDetalleCarrera(code)
+            } catch (_: Exception) {
+                _error.value =
+                    "Esta carrera no está disponible sin conexión a internet :("
+
+            }
         }
     }
 }
