@@ -40,10 +40,6 @@ class BuscadorVM(
         }
     }
 
-    fun refrescar() {
-        cargarCarreras()
-    }
-
     init {
         cargarCarreras()
     }
