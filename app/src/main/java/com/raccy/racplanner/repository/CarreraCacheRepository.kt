@@ -16,4 +16,8 @@ class CarreraCacheRepository(
     suspend fun obtenerCarreras(): List<CarreraEntity> {
         return dao.obtenerTodas()
     }
+
+    suspend fun limpiar() {
+        dao.eliminarTodas()
+    }
 }

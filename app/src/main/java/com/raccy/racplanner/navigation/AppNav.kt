@@ -149,7 +149,7 @@ fun AppNav() {
                     PerfilUs( horarioState = horarioState )
 
                 AJUSTES ->
-                    Ajustes()
+                    Ajustes( horarioState = horarioState )
             }
         }
     }
